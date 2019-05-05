@@ -17,14 +17,14 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.cadastro = {};
+        // this.cadastro = {};
 
-        this.service.listar().subscribe(resposta => this.cadastros = resposta);
+        // this.service.listar().subscribe(resposta => this.cadastros = resposta);
     }
-    criar(frm: FormGroup) {
-        this.service.criar(this.cadastro).subscribe(resposta => {
-            this.cadastros.push(resposta);
-            frm.reset();
-        });
-    }
+    // criar(frm: FormGroup) {
+    //     // this.service.criar(this.cadastro).subscribe(resposta => {
+    //     //     this.cadastros.push(resposta);
+    //     //     frm.reset();
+    //     // });
+    // }
 }

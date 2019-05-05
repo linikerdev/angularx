@@ -1,43 +1,39 @@
-
 <mat-form-field>
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
 </mat-form-field>
 <main role="main">
-    <section class="my-4">
-      <div class="container">
-          <h2>Listagem de Contatos</h2>
-      </div>
-    </section>
-    <section class="mt-5">
-        <div class="container">
-          <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-              <thead class="thead-light text-center">
-                <tr>
-                  <th>ID</th>
-    
-                  <th class="w-50">Nome Completo</th>
-    
-                  <th class="w-25">Foto</th>
-
-                </tr>
-              </thead>
-    
-              <tbody>
-                <tr *ngFor="let cadastro">
-                  <td class="text-center w-25">{{cadastro.id}}</td>
-    
-                  <td>{{cadastro.nome}}</td>
-    
-                  <td>{{cadastro.foto}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <div class="mat-elevation-z8">
-        <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  <section class="my-4">
+    <div class="container">
+      <h2>Listagem de Contatos</h2>
     </div>
+  </section>
+  <section class="mt-5">
+    <div class="container">
+      <div class="table-responsive">
+
+      </div>
+    </div>
+  </section>
+</main>
+<mat-table [dataSource]="dataSource">
+  <!-- ID Column -->
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="first_name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Primeiro Nome </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.first_name}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="last_name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Ultimo Nome </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.last_name}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
+<div class="mat-elevation-z8">
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>

@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { AppService } from 'src/app/app.service';
+import { User } from 'src/app/interfaces/User';
 
 @Component({
     selector: 'app-tables',
@@ -7,26 +9,33 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
     styleUrls: ['./tables.component.scss']
 })
 export class TablesComponent implements OnInit {
-    displayedColumns = ['id', 'name', 'progress', 'color'];
-    dataSource: MatTableDataSource<UserData>;
+    displayedColumns = ['id', 'first_name', 'last_name'];
+    dataSource: MatTableDataSource<any>;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    constructor() {
-        // Create 100 users
-        const users: UserData[] = [];
-        for (let i = 1; i <= 100; i++) {
-            users.push(createNewUser(i));
-        }
+    users: User[] = [];
 
-        // Assign the data to the data source for the table to render
-        this.dataSource = new MatTableDataSource(users);
-    }
+    constructor(private serviceApi: AppService) {}
 
-    ngOnInit() {
+    async ngOnInit() {
+
+        const users = await this.serviceApi.getUsers().toPromise()
+        this.users = users.data
+        this.dataSource = new MatTableDataSource(this.users);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+
+
+    }
+
+    getUsers() {
+        return this.serviceApi.getUsers()
+        // .then(res => this.users = res.data)
+        // .catch(err => {
+        //     throw new Error('ocorreu um erro ao processar request')
+        // })
     }
 
     applyFilter(filterValue: string) {
@@ -40,64 +49,26 @@ export class TablesComponent implements OnInit {
 }
 
 /** Constants used to fill up our data base. */
-const COLORS = [
-    'maroon',
-    'red',
-    'orange',
-    'yellow',
-    'olive',
-    'green',
-    'purple',
-    'fuchsia',
-    'lime',
-    'teal',
-    'aqua',
-    'blue',
-    'navy',
-    'black',
-    'gray'
-];
-const NAMES = [
-    'Maia',
-    'Asher',
-    'Olivia',
-    'Atticus',
-    'Amelia',
-    'Jack',
-    'Charlotte',
-    'Theodore',
-    'Isla',
-    'Oliver',
-    'Isabella',
-    'Jasper',
-    'Cora',
-    'Levi',
-    'Violet',
-    'Arthur',
-    'Mia',
-    'Thomas',
-    'Elizabeth'
-];
 
-export interface UserData {
-    id: string;
-    name: string;
-    progress: string;
-    color: string;
-}
+// export interface UserData {
+//     id: string;
+//     name: string;
+//     progress: string;
+//     color: string;
+// }
 
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-    const name =
-        NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-        ' ' +
-        NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-        '.';
+// /** Builds and returns a new User. */
+// function createNewUser(id: number): UserData {
+//     const name =
+//         NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
+//         ' ' +
+//         NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
+//         '.';
 
-    return {
-        id: id.toString(),
-        name: name,
-        progress: Math.round(Math.random() * 100).toString(),
-        color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
-    };
-}
+//     return {
+//         id: id.toString(),
+//         name: name,
+//         progress: Math.round(Math.random() * 100).toString(),
+//         color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
+//     };
+// }
