@@ -1,0 +1,43 @@
+
+<mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+</mat-form-field>
+<main role="main">
+    <section class="my-4">
+      <div class="container">
+          <h2>Listagem de Contatos</h2>
+      </div>
+    </section>
+    <section class="mt-5">
+        <div class="container">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead class="thead-light text-center">
+                <tr>
+                  <th>ID</th>
+    
+                  <th class="w-50">Nome Completo</th>
+    
+                  <th class="w-25">Foto</th>
+
+                </tr>
+              </thead>
+    
+              <tbody>
+                <tr *ngFor="let cadastro">
+                  <td class="text-center w-25">{{cadastro.id}}</td>
+    
+                  <td>{{cadastro.nome}}</td>
+    
+                  <td>{{cadastro.foto}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="mat-elevation-z8">
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
